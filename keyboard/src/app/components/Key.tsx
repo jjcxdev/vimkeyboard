@@ -47,6 +47,7 @@ export default function Key({
 */
 
   const isActiveInMode = activeKeys.includes(action);
+  console.log(`Is ${action} active in ${mode}? ${isActiveInMode}`);
 
   if (isActiveInMode) {
     additionalModeClass = ` key-${safeMode}`; // Apply only if key is active in current mode

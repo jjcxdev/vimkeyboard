@@ -43,6 +43,7 @@ export default function Voyager() {
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
+      console.log(`Key down: ${event.key}`);
       // Prevent default to avoid unwanted behaviours
       event.preventDefault();
 
@@ -63,6 +64,7 @@ export default function Voyager() {
     };
 
     const handleKeyUp = (event: KeyboardEvent) => {
+      //    console.log(`Key up: ${event.key}`);
       // Resetting key state to false when released
       setKeyState((prevState) => ({ ...prevState, [event.key]: false }));
     };

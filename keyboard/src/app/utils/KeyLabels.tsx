@@ -9,6 +9,7 @@ export interface KeyAction {
 const GlobalMotions = {};
 
 export const NormalModeKeyLabels: KeyAction = {
+  "Escape": { normal: "Return to normal mode" },
   // Movement - Basic
   h: { normal: "Move cursor left" },
   j: { normal: "Move cursor down" },
@@ -115,7 +116,7 @@ export const InsertModeKeyLabels: KeyAction = {
   O: { insert: "Open a new line above and enter Insert mode" },
 
   // Editing within Insert Mode
-  Backspace: { insert: "Delete character before the cursor" }, // Keep 'insert' mode
+  "Backspace": { insert: "Delete character before the cursor" }, // Keep 'insert' mode
   "Control + h": { insert: "Delete character before the cursor" },
   "Control + w": { insert: "Delete word before the cursor" },
   "Control + u": { insert: "Delete from cursor to beginning of line" },
