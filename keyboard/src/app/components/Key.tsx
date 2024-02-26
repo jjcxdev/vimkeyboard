@@ -4,6 +4,7 @@ import {
   InsertModeKeyLabels,
   VisualModeKeyLabels,
 } from "../utils/KeyLabels";
+import { getActiveKeysForMode } from "../utils/ActiveKeys";
 
 interface KeyProps {
   children?: ReactNode;
@@ -12,26 +13,50 @@ interface KeyProps {
   isPressed?: boolean;
 }
 
-export default function Key({ children, action, mode, isPressed }: KeyProps) {
+export default function Key({
+  children,
+  action,
+  mode = "normal",
+  isPressed,
+}: KeyProps) {
   // Initial styling, nothing additional applied
   let additionalModeClass = "";
 
+  const safeMode: "normal" | "visual" | "insert" = mode as
+    | "normal"
+    | "visual"
+    | "insert";
+
+  const keyLabels = {
+    normal: NormalModeKeyLabels,
+    visual: VisualModeKeyLabels,
+    insert: InsertModeKeyLabels,
+  }[safeMode];
+
+  let activeKeys: string[] = [];
+
+  if (keyLabels) {
+    activeKeys = getActiveKeysForMode(keyLabels, safeMode);
+  }
+
+  /*
   const isActiveInMode =
     (mode === "normal" && NormalModeKeyLabels[action]?.normal) ||
     (mode === "visual" && VisualModeKeyLabels[action]?.visual) ||
     (mode === "insert" && InsertModeKeyLabels[action]?.insert);
+*/
+
+  const isActiveInMode = activeKeys.includes(action);
 
   if (isActiveInMode) {
-    additionalModeClass = ` key-${mode}`; // Apply only if key is active in current mode
+    additionalModeClass = ` key-${safeMode}`; // Apply only if key is active in current mode
   }
-
-  // Construct className with base key class and additional mode class
-  const className = `key${additionalModeClass}`;
 
   // DO NOT REMOVE THIS - GLOBAL KEYPRESS REGARDLESS OF MODE
   let borderColor = isPressed ? "yellow" : ""; // yellow when pressed or inital styling
 
-  //
+  // Construct className with base key class and additional mode class
+  const className = `key${additionalModeClass}`;
 
   // Pass GLOBAL KEY PRESS to keys
   return (
