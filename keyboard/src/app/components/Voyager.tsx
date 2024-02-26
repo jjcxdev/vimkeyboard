@@ -41,29 +41,36 @@ export default function Voyager() {
   const [keyState, setKeyState] = useState<KeyState>({});
   const [currentMode, setCurrentMode] = useState<Mode>("normal");
 
-  /*
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      // Prevent default to avoid unwanted behaviours
+      event.preventDefault();
+
+      // Setting the key state to true when pressed
+      setKeyState((prevState) => ({ ...prevState, [event.key]: true }));
+
       // Mode switching logic
-      if (event.key === "v" && currentMode === "normal") {
-        setCurrentMode("visual");
-      } else if (event.key === "i" && currentMode === "normal") {
-        setCurrentMode("insert");
+      if (currentMode === "normal") {
+        if (event.key === "v") {
+          setCurrentMode("visual");
+        } else if (event.key === "i") {
+          setCurrentMode("insert");
+        }
       } else if (event.key === "Escape") {
+        // Allow returning to "normal" from any mode
         setCurrentMode("normal");
       }
     };
-    */
 
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      setKeyState((prevState) => ({ ...prevState, [event.key]: true }));
-    };
     const handleKeyUp = (event: KeyboardEvent) => {
+      // Resetting key state to false when released
       setKeyState((prevState) => ({ ...prevState, [event.key]: false }));
     };
 
     const handleKeyDownTyped = handleKeyDown as unknown as EventListener;
     const handleKeyUpTyped = handleKeyUp as unknown as EventListener;
 
+    // Convert the event listeners to the correct type
     window.addEventListener("keydown", handleKeyDownTyped);
     window.addEventListener("keyup", handleKeyUpTyped);
 
