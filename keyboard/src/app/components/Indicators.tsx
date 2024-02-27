@@ -10,7 +10,7 @@ export default function Indicator({ mode, currentMode }: IndicatorProps) {
     padding: "0.5rem",
     display: "flex",
     borderRadius: "0.5rem",
-    border: isActive ? "1px solid rgb(0, 255, 0)" : "1px solid rgb(50,53,70)",
+    border: isActive ? "1px solid rgb(0, 255, 0)" : "1px solid #374151",
     justifyContent: "center",
     alignItems: "center",
   };

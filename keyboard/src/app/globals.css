@@ -27,6 +27,7 @@ body {
 }
 
 .key {
+  border-color: #374151;
   border-radius: 0.75rem;
   padding: 1rem;
   padding-top: 1.5rem;
@@ -39,18 +40,18 @@ body {
 }
 
 .key-normal {
-  border: 2px solid rgb(255, 0, 255);
-  background: rgba(255, 0, 255, 0.3);
+  border: 2px solid rgb(255, 0, 255) !important;
+  background: rgba(255, 0, 255, 0.3) !important;
 }
 
 .key-visual {
-  border: 2px solid rgb(0, 200, 255);
-  background: rgba(0, 200, 255, 0.3);
+  border: 2px solid rgb(0, 200, 255) !important;
+  background: rgba(0, 200, 255, 0.3) !important;
 }
 
 .key-insert {
-  border: 2px solid rgb(255, 140, 0);
-  background: rgba(255, 140, 0, 0.3);
+  border: 2px solid rgb(255, 0, 0) !important;
+  background: rgba(255, 0, 0, 0.3) !important;
 }
 
 .labels {

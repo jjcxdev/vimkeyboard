@@ -29,11 +29,9 @@ const CommandDisplay = () => {
   };
 
   return (
-    <div className="w-full flex flex-col">
-      <h2 className="text-xl text-gray-400 font-bold py-4">
-        {getHeading(currentMode as Mode)}
-      </h2>
-      <div className="overflow-y-scroll columns-4 p-2 border border-gray-600 rounded-lg h-full">
+    <div className="w-full max-w-[950px] flex flex-col">
+      <h2 className="text-gray-400 py-4">{getHeading(currentMode as Mode)}</h2>
+      <div className="overflow-y-scroll columns-4 p-2 border border-gray-700 rounded-lg h-full">
         {Object.entries(keyActions).map(([key, action]) => {
           const actionDescription = action[currentMode as Mode];
           return (
@@ -42,7 +40,7 @@ const CommandDisplay = () => {
                 className="flex flex-row items-center text-xs gap-2"
                 key={key}
               >
-                <div className="px-2 whitespace-nowrap py-[2px] rounded-md text-white border border-gray-600 bg-gray-50/10">
+                <div className="px-2 whitespace-nowrap py-[2px] rounded-md text-white border border-gray-700 bg-gray-50/10">
                   {key}
                 </div>
                 <div className="whitespace-nowrap text-gray-400">

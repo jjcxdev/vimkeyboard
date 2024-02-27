@@ -9,8 +9,8 @@ export default function Home() {
   return (
     <ModeProvider>
       <main className="flex h-screen w-full flex-col items-center justify-start p-24">
-        <div className="w-full flex justify-start pb-8">
-          <div className="p-2 rounded-md border border-gray-600">
+        <div className="w-full max-w-[950px] flex justify-start pb-8">
+          <div className="p-2 text-xs text-gray-400 rounded-md border border-gray-700">
             Keyboard dropdown
           </div>
         </div>

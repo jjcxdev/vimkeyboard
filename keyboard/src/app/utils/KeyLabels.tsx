@@ -22,12 +22,11 @@ export const GlobalMotions = {
   ":w": { global: "Save" },
   ":wq": { global: "Save & quit" },
   ":x": { global: "Save & quit" },
-  ZZ: { global: "Save & exit if saved" },
+  ZZ: { global: "Save & exit" },
   ZQ: { global: "Quit w/o saving" },
 
   // Reading and Writing with External Commands
   ":r": { global: "Read file" },
-  ":w !sudo tee %": { global: "Write w/ sudo" },
   "!": { global: "Run command" },
 };
 
@@ -66,9 +65,9 @@ export const NormalModeKeyLabels: KeyAction = {
   N: { normal: "Prev search result" },
   "?": { normal: "Search backward" },
   ":%s/old/new/g": { normal: "Replace all" },
-  "*": { normal: "Next word occurrence" },
-  "#": { normal: "Prev word occurrence" },
-  ":g/old/d": { normal: "Delete lines with 'old'" },
+  "*": { normal: "Next same word" },
+  "#": { normal: "Prev same word" },
+  ":g/old/d": { normal: "Delete 'old' lines" },
 
   // Window and Screen Management Commands
   ":split": { normal: "Split horizontally" },
@@ -132,16 +131,13 @@ export const VisualModeKeyLabels: KeyAction = {
 
 export const InsertModeKeyLabels: KeyAction = {
   // Text Deletion
-  Backspace: { insert: "Delete char before cursor" },
-  "Ctrl + h": { insert: "Delete char before cursor" },
-  "Ctrl + w": { insert: "Delete word before cursor" },
-  "Ctrl + u": { insert: "Delete to line start" },
-  "Ctrl + k": { insert: "Delete to line end" },
-
-  // Command Execution
-  "Ctrl + o": { insert: "Execute command in Normal mode" },
+  Backspace: { insert: "Del prev" },
+  "Ctrl + h": { insert: "Del prev" },
+  "Ctrl + w": { insert: "Del prev word" },
+  "Ctrl + u": { insert: "Del to line start" },
+  "Ctrl + k": { insert: "Del to line end" },
 
   // Autocomplete
   "Ctrl + n": { insert: "Autocomplete next" },
-  "Ctrl + p": { insert: "Autocomplete previous" },
+  "Ctrl + p": { insert: "Autocomplete prev" },
 };
