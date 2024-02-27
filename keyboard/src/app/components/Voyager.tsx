@@ -8,32 +8,12 @@ import { BsCapslock } from "react-icons/bs";
 import { ImCtrl } from "react-icons/im";
 import { MdSpaceBar } from "react-icons/md";
 import { GrReturn } from "react-icons/gr";
-import { useEffect, useState, KeyboardEvent } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Indicator from "./Indicators";
 import { useMode } from "../utils/ModeContext";
-
-const MAC_KEYS = {
-  Shift: "Shift",
-  Control: "Control",
-  Option: "Alt", // "Option" on Mac keyboards
-  Command: "Meta", // "Command" on Mac keyboards
-  CapsLock: "CapsLock",
-  Tab: "Tab",
-  Escape: "Escape",
-  Enter: "Enter",
-  Space: " ",
-  Backspace: "Backspace",
-  Delete: "Delete", // Note: "Delete" on Mac is "Backspace"
-  ArrowUp: "ArrowUp",
-  ArrowDown: "ArrowDown",
-  ArrowLeft: "ArrowLeft",
-  ArrowRight: "ArrowRight",
-  Home: "Home",
-  End: "End",
-  PageUp: "PageUp",
-  PageDown: "PageDown",
-};
+import { MAC_KEYS } from "../utils/constants";
+import { useKeyHandler } from "../utils/useKeyHandlers";
 
 type KeyState = Record<string, boolean>;
 
@@ -41,46 +21,7 @@ export default function Voyager() {
   const { currentMode, setCurrentMode } = useMode();
   const [keyState, setKeyState] = useState<KeyState>({});
 
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      console.log(`Key down: ${event.key}`);
-      // Prevent default to avoid unwanted behaviours
-      event.preventDefault();
-
-      // Setting the key state to true when pressed
-      setKeyState((prevState) => ({ ...prevState, [event.key]: true }));
-
-      // Mode switching logic
-      if (currentMode === "normal") {
-        if (event.key === "v") {
-          setCurrentMode("visual");
-        } else if (event.key === "i") {
-          setCurrentMode("insert");
-        }
-      } else if (event.key === "Escape") {
-        // Allow returning to "normal" from any mode
-        setCurrentMode("normal");
-      }
-    };
-
-    const handleKeyUp = (event: KeyboardEvent) => {
-      //    console.log(`Key up: ${event.key}`);
-      // Resetting key state to false when released
-      setKeyState((prevState) => ({ ...prevState, [event.key]: false }));
-    };
-
-    const handleKeyDownTyped = handleKeyDown as unknown as EventListener;
-    const handleKeyUpTyped = handleKeyUp as unknown as EventListener;
-
-    // Convert the event listeners to the correct type
-    window.addEventListener("keydown", handleKeyDownTyped);
-    window.addEventListener("keyup", handleKeyUpTyped);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDownTyped);
-      window.removeEventListener("keyup", handleKeyUpTyped);
-    };
-  }, [currentMode]);
+  useKeyHandler(setCurrentMode, currentMode, setKeyState);
 
   return (
     <main className="flex flex-col min-w-[950px]">
