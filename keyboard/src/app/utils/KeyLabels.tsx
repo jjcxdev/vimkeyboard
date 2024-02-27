@@ -6,136 +6,157 @@ export interface KeyAction {
   };
 }
 
-const GlobalMotions = {};
+const GlobalMotions = {
+  // Buffer and Tab Management
+  ":bn": { global: "Switch to the next buffer" },
+  ":bp": { global: "Switch to the previous buffer" },
+  ":tabnew": { global: "Open a new tab" },
+  ":tabnext": { global: "Move to the next tab" },
+  ":tabprev": { global: "Move to the previous tab" },
+  ":tabclose": { global: "Close the current tab" },
+  ":tabonly": { global: "Close all other tabs" },
+
+  // File Operations and Saving
+  ":q": { global: "Close current window" },
+  ":qa": { global: "Quit Vim" },
+  ":w": { global: "Save changes to the disk" },
+  ":wq": { global: "Save and quit" },
+  ":x": { global: "Save and quit (same as :wq)" },
+  ZZ: { global: "Save changes and quit if no changes are made" },
+  ZQ: { global: "Quit without saving changes" },
+
+  // Reading and Writing with External Commands
+  ":r": { global: "Read a file into the current buffer" },
+  ":w !sudo tee %": { global: "Write out the current file using sudo" },
+  "!": { global: "Execute an external command" },
+};
 
 export const NormalModeKeyLabels: KeyAction = {
-  "Escape": { normal: "Return to normal mode" },
-  // Movement - Basic
-  h: { normal: "Move cursor left" },
-  j: { normal: "Move cursor down" },
-  k: { normal: "Move cursor up" },
-  l: { normal: "Move cursor right" },
-
-  // Movement - Words
-  w: { normal: "Jump forward to start of a word" },
-  W: { normal: "Jump forward to start of word (punctuation included)" },
-  e: { normal: "Jump forward to the end of a word" },
-  E: { normal: "Jump forward to the end of a word (punctuation included)" },
-  b: { normal: "Jump backward to the start of a word" },
-  B: { normal: "Jump backward to the start of a word (punctuation included)" },
-  ge: { normal: "Jump backward to the end of a word" },
-  gE: { normal: "Jump backward to the end of a word (punctuation included)" },
-
-  // Movement - Text Objects
-  iw: { normal: "Inner word (select the current word)" }, // Consider using 'visual' mode
-  aw: { normal: "A word (select the current word including whitespace)" },
-  ip: { normal: "Inner paragraph (select the current paragraph)" },
-  ap: {
-    normal: "A paragraph (select the current paragraph including whitespace)",
-  },
-
-  // Movement - Lines
-  0: { normal: "Jump to the start of the line" },
-  "^": { normal: "Jump to the first non-blank character of the line" },
+  // Movement Commands
+  h: { normal: "Move left" },
+  j: { normal: "Move down" },
+  k: { normal: "Move up" },
+  l: { normal: "Move right" },
+  w: { normal: "Jump forwards to the start of a word" },
+  e: { normal: "Jump forwards to the end of a word" },
+  b: { normal: "Jump backwards to the start of a word" },
+  "0": { normal: "Jump to the start of the line" },
   $: { normal: "Jump to the end of the line" },
-  g_: { normal: "Jump to the last non-blank character of the line" },
-
-  // Movement - Screen & Document
   gg: { normal: "Go to the first line of the document" },
   G: { normal: "Go to the last line of the document" },
-  H: { normal: "Move to the top of the screen" }, // Or consider 'screen' property
-  M: { normal: "Move to the middle of the screen" },
-  L: { normal: "Move to the bottom of the screen" },
+
+  // Editing Commands
+  dd: { normal: "Delete line" },
+  yy: { normal: "Yank (copy) line" },
+  p: { normal: "Paste" },
+  C: { normal: "Change (delete) to the end of the line and enter Insert mode" },
+  s: { normal: "Delete character and enter Insert mode" },
+  S: { normal: "Delete line and enter Insert mode" },
+  cc: { normal: "Change (delete) entire line and enter Insert mode" },
+  ciw: { normal: "Change inner word" },
+  "di'": { normal: "Delete inside single quotes" },
+
+  // Undo/Redo Commands
+  u: { normal: "Undo" },
+  "Ctrl + r": { normal: "Redo" },
+
+  // Search and Replace Commands
+  "/": { normal: "Search for a pattern" },
+  n: { normal: "Repeat search in same direction" },
+  N: { normal: "Repeat search in opposite direction" },
+  "?": { normal: "Enter Search mode (backward)" },
+  ":%s/old/new/g": { normal: "Replace all old with new throughout file" },
+  "*": {
+    normal: "Search for the next occurrence of the word under the cursor",
+  },
+  "#": {
+    normal: "Search for the previous occurrence of the word under the cursor",
+  },
+  ":g/old/d": { normal: "Delete all lines containing 'old'" },
+
+  // Window and Screen Management Commands
+  ":split": { normal: "Split window horizontally" },
+  ":vsplit": { normal: "Split window vertically" },
   zz: { normal: "Center cursor on screen" },
-  zt: { normal: "Position cursor at the top of the screen" },
-  zb: { normal: "Position cursor at the bottom of the screen" },
 
-  // Movement - Other
-  gj: { normal: "Move cursor down (multi-line text)" },
-  gk: { normal: "Move cursor up (multi-line text)" },
-  "%": { normal: "Move cursor to matching character (, ), {, }, [, ]" },
-  gd: { normal: "Move to local declaration" },
-  gD: { normal: "Move to global declaration" },
+  // Mode Transition Commands
+  i: { normal: "Enter Insert mode" },
+  I: { normal: "Enter Insert mode at the beginning of the line" },
+  A: { normal: "Enter Insert mode at the end of the line" },
+  o: { normal: "Open a new line below and enter Insert mode" },
+  O: { normal: "Open a new line above and enter Insert mode" },
+  v: { normal: "Enter Visual mode" },
+  V: { normal: "Enter Visual Line mode" },
+  "Ctrl + v": { normal: "Enter Visual Block mode" },
 
-  // Movement - Searching
-  fx: { normal: "Jump to next occurrence of character x" },
-  // ... add more search commands
+  // Replace Mode Commands
+  R: { normal: "Enter Replace mode" },
+  gR: {
+    normal:
+      "Enter Virtual Replace mode, replacing virtual characters (like tabs with spaces)",
+  },
 
-  // Movement - Paragraphs/Blocks
-  "}": { normal: "Jump to next paragraph (or function/block)" },
-  "{": { normal: "Jump to previous paragraph (or function/block)" },
+  // Advanced Editing and Selection
+  "vi[": { normal: "Visually select inside brackets" },
+  ".": { normal: "Repeat the last change" },
 
-  // Editing - Deleting
-  x: { normal: "Delete character under cursor" },
-  d: { normal: "Delete (flexible, see with motions/text objects)" },
-  dd: { normal: "Delete entire line" },
-  // ... add more editing commands
+  // Register and Macro Operations
+  qa: { normal: "Start recording macro in register a" },
+  q: { normal: "Stop recording macro" },
+  "@a": { normal: "Execute macro stored in register a" },
+
+  // Fold Manipulation Commands
+  zf: { normal: "Create a fold" },
+  zo: { normal: "Open a fold" },
+  zc: { normal: "Close a fold" },
+
+  // Marks and Navigation Commands
+  ma: { normal: "Set mark a" },
+  "`a": { normal: "Jump to mark a" },
+
+  // Pattern Matching and Line Manipulation
+  ":m": { normal: "Move lines" },
+
+  // Command Mode Entry
+  ":": { normal: "Enter Command-line mode" },
 };
 
 export const VisualModeKeyLabels: KeyAction = {
-  // Entering Visual Modes (you'll need to add these based on your setup)
-  v: { visual: "Enter Visual mode (character-wise selection)" },
-  V: { visual: "Enter Visual Line mode (line-wise selection)" },
-  "Control + v": { visual: "Enter Visual Block mode (column selection)" },
+  // Mode Transition
+  Escape: { visual: "Exit Visual mode" },
+  // Editing Commands
+  ">": { visual: "Shift text right" },
+  "<": { visual: "Shift text left" },
+  y: { visual: "Yank (copy) highlighted text" },
+  d: { visual: "Delete highlighted text" },
 
-  // Navigation in Visual Mode
-  h: { visual: "Expand selection left" },
-  j: { visual: "Expand selection down" },
-  k: { visual: "Expand selection up" },
-  l: { visual: "Expand selection right" },
-  w: { visual: "Expand selection to start of next word" },
-  W: {
-    visual: "Expand selection to start of next word (punctuation included)",
-  },
-  b: { visual: "Expand selection to start of previous word" },
-  B: {
-    visual: "Expand selection to start of previous word (punctuation included)",
-  },
-
-  // Actions on Visual Selection
-  d: { visual: "Delete (cut) the selected text" },
-  y: { visual: "Yank (copy) the selected text" },
-  c: { visual: "Change (replace) the selected text" },
-  "<": { visual: "Shift selected text left" },
-  ">": { visual: "Shift selected text right" },
-  u: { visual: "Change selected text to lowercase" },
-  U: { visual: "Change selected text to uppercase" },
-  "~": { visual: "Invert the case of selected text" },
-  // Other Visual Mode Actions
-  o: { visual: "Move to the other end of the selected area" },
-  O: { visual: "Move to the other corner of a Visual Block area" },
+  // Case Manipulation Commands
+  "~": { visual: "Switch case" },
+  u: { visual: "Lowercase" },
+  U: { visual: "Uppercase" },
 };
 
 export const InsertModeKeyLabels: KeyAction = {
-  // Basic Insertion
-  i: { insert: "Insert before the cursor" },
-  I: { insert: "Insert at the beginning of the line" },
-  a: { insert: "Insert (append) after the cursor" },
-  A: { insert: "Insert (append) at the end of the line" },
-  o: { insert: "Open a new line below and enter Insert mode" },
-  O: { insert: "Open a new line above and enter Insert mode" },
+  // Text Deletion
+  Backspace: { insert: "Delete the character before the cursor" },
+  "Ctrl + h": {
+    insert: "Delete the character before the cursor (equivalent to Backspace)",
+  },
+  "Ctrl + w": { insert: "Delete the word before the cursor" },
+  "Ctrl + u": {
+    insert: "Delete all characters before the cursor on the current line",
+  },
+  "Ctrl + k": { insert: "Delete from the cursor to the end of the line" },
 
-  // Editing within Insert Mode
-  "Backspace": { insert: "Delete character before the cursor" }, // Keep 'insert' mode
-  "Control + h": { insert: "Delete character before the cursor" },
-  "Control + w": { insert: "Delete word before the cursor" },
-  "Control + u": { insert: "Delete from cursor to beginning of line" },
-  "Control + k": { insert: "Delete from cursor to end of line" },
-  // Navigation in Insert Mode
-  "Control + o": {
-    insert: "Temporarily exit Insert mode (for one Normal mode command)",
+  // Command Execution
+  "Ctrl + o": {
+    insert: "Execute one command in Normal mode and return to Insert mode",
   },
 
-  // Completion
-  "Control + n": { insert: "Complete next match" },
-  "Control + p": { insert: "Complete previous match" },
+  // Autocomplete
+  "Ctrl + n": { insert: "Autocomplete next" },
+  "Ctrl + p": { insert: "Autocomplete previous" },
 
-  // Special Actions
-  "Control + r": {
-    insert: "Insert contents of a register (see :help registers)",
-  },
-  "Control + t": { insert: "Indent line (add shiftwidth)" },
-  "Control + d": { insert: "De-indent line (remove shiftwidth)" },
-  Escape: { insert: "Exit Insert mode" }, // Keep 'insert' mode
-  "Control + c": { insert: "Exit Insert mode" },
+  // Mode Transition
+  Escape: { insert: "Exit Insert mode" },
 };

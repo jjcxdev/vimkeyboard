@@ -11,6 +11,7 @@ import { GrReturn } from "react-icons/gr";
 import { useEffect, useState, KeyboardEvent } from "react";
 import Image from "next/image";
 import Indicator from "./Indicators";
+import { useMode } from "../utils/ModeContext";
 
 const MAC_KEYS = {
   Shift: "Shift",
@@ -35,11 +36,10 @@ const MAC_KEYS = {
 };
 
 type KeyState = Record<string, boolean>;
-type Mode = "normal" | "insert" | "visual";
 
 export default function Voyager() {
+  const { currentMode, setCurrentMode } = useMode();
   const [keyState, setKeyState] = useState<KeyState>({});
-  const [currentMode, setCurrentMode] = useState<Mode>("normal");
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
