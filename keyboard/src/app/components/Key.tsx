@@ -39,13 +39,6 @@ export default function Key({
     activeKeys = getActiveKeysForMode(keyLabels, safeMode);
   }
 
-  /*
-  const isActiveInMode =
-    (mode === "normal" && NormalModeKeyLabels[action]?.normal) ||
-    (mode === "visual" && VisualModeKeyLabels[action]?.visual) ||
-    (mode === "insert" && InsertModeKeyLabels[action]?.insert);
-*/
-
   const isActiveInMode = activeKeys.includes(action);
   console.log(`Is ${action} active in ${mode}? ${isActiveInMode}`);
 
@@ -54,7 +47,7 @@ export default function Key({
   }
 
   // DO NOT REMOVE THIS - GLOBAL KEYPRESS REGARDLESS OF MODE
-  let borderColor = isPressed ? "yellow" : ""; // yellow when pressed or inital styling
+  let borderColor = isPressed ? "yellow" : "#1F2937"; // yellow when pressed or inital styling
 
   // Construct className with base key class and additional mode class
   const className = `key${additionalModeClass}`;
